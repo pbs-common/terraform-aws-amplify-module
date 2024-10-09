@@ -17,7 +17,8 @@ resource "aws_amplify_domain_association" "domain" {
   }
   lifecycle {
     ignore_changes = [
-      sub_domain
+      sub_domain,
+      certificate_settings
     ]
   }
 

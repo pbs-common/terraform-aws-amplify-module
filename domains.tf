@@ -15,6 +15,12 @@ resource "aws_amplify_domain_association" "domain" {
       prefix      = sub_domain.value.prefix
     }
   }
+
+  certificate_settings {
+    type                   = var.domains[count.index].certificate_settings.type
+    custom_certificate_arn = var.domains[count.index].certificate_settings.custom_certificate_arn
+  }
+
   lifecycle {
     ignore_changes = [
       sub_domain

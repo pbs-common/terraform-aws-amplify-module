@@ -143,7 +143,11 @@ variable "branches" {
 variable "domains" {
   description = "Domains for an Amplify app."
   type = list(object({
-    domain_name            = string
+    domain_name = string
+    certificate_settings = optional(object({
+      custom_certificate_arn = string
+      type                   = string
+    }))
     enable_auto_sub_domain = optional(bool)
     wait_for_verification  = optional(bool)
     sub_domains = list(object({
@@ -152,6 +156,10 @@ variable "domains" {
     }))
   }))
   default = []
+  validation {
+    condition     = [for d in var.domains : can(d.certificate_settings.type == "AMPLIFY_MANAGED" || (d.certificate_settings.type == "CUSTOM" && d.certificate_settings.custom_certificate_arn != ""))]
+    error_message = "Either specify that your domain certificate is Amplify-managed or provide a custom certificate ARN."
+  }
 }
 
 variable "backend_environments" {

@@ -157,7 +157,7 @@ variable "domains" {
   }))
   default = []
   validation {
-    condition     = [for d in var.domains : can(d.certificate_settings.type == "AMPLIFY_MANAGED" || (d.certificate_settings.type == "CUSTOM" && d.certificate_settings.custom_certificate_arn != ""))]
+    condition     = alltrue([for d in var.domains : can(d.certificate_settings.type == "AMPLIFY_MANAGED" || (d.certificate_settings.type == "CUSTOM" && d.certificate_settings.custom_certificate_arn != ""))])
     error_message = "Either specify that your domain certificate is Amplify-managed or provide a custom certificate ARN."
   }
 }

@@ -7,7 +7,7 @@
 Use this URL for the source of the module. See the usage examples below for more details.
 
 ```hcl
-github.com/pbs/terraform-aws-amplify-module?ref=0.0.18
+github.com/pbs/terraform-aws-amplify-module?ref=x.y.z
 ```
 
 ### Alternative Installation Methods
@@ -24,7 +24,7 @@ Integrate this module like so:
 
 ```hcl
 module "amplify" {
-  source = "github.com/pbs/terraform-aws-amplify-module?ref=0.0.18"
+  source = "github.com/pbs/terraform-aws-amplify-module?ref=x.y.z"
 
   # Tagging Parameters
   organization = var.organization
@@ -42,7 +42,7 @@ The easiest way to use this module is to use the AWS console to create an Amplif
 
 If this repo is added as a subtree, then the version of the module should be close to the version shown here:
 
-`0.0.18`
+`x.y.z`
 
 Note, however that subtrees can be altered as desired within repositories.
 
@@ -58,14 +58,14 @@ Below is automatically generated documentation on this Terraform module using [t
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.2 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.13.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.24.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.20.0 |
 
 ## Modules
 
@@ -88,18 +88,19 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment (sharedtools, dev, staging, qa, prod) | `string` | n/a | yes |
 | <a name="input_organization"></a> [organization](#input\_organization) | Organization using this module. Used to prefix tags so that they are easily identified as being from your organization | `string` | n/a | yes |
+| <a name="input_owner"></a> [owner](#input\_owner) | Tag used to group resources according to product | `string` | n/a | yes |
 | <a name="input_product"></a> [product](#input\_product) | Tag used to group resources according to product | `string` | n/a | yes |
 | <a name="input_repo"></a> [repo](#input\_repo) | Tag used to point to the repo using this module | `string` | n/a | yes |
 | <a name="input_access_token"></a> [access\_token](#input\_access\_token) | Personal access token for a third-party source control system for an Amplify app. The personal access token is used to create a webhook and a read-only deploy key. The token is not stored. | `string` | `null` | no |
-| <a name="input_auto_branch_creation_configs"></a> [auto\_branch\_creation\_configs](#input\_auto\_branch\_creation\_configs) | Automated branch creation configuration for an Amplify app. An auto\_branch\_creation\_config block is documented below. | <pre>list(object({<br>    branch_name                 = optional(string)<br>    build_spec                  = optional(string)<br>    enable_auto_build           = optional(bool)<br>    enable_basic_auth           = optional(bool)<br>    enable_performance_mode     = optional(bool)<br>    enable_pull_request_preview = optional(bool)<br>    environment_variables = list(object({<br>      name  = string<br>      value = string<br>    }))<br>    framework                     = optional(string)<br>    pull_request_environment_name = optional(string)<br>    stage                         = optional(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_auto_branch_creation_configs"></a> [auto\_branch\_creation\_configs](#input\_auto\_branch\_creation\_configs) | Automated branch creation configuration for an Amplify app. An auto\_branch\_creation\_config block is documented below. | <pre>list(object({<br/>    branch_name                 = optional(string)<br/>    build_spec                  = optional(string)<br/>    enable_auto_build           = optional(bool)<br/>    enable_basic_auth           = optional(bool)<br/>    enable_performance_mode     = optional(bool)<br/>    enable_pull_request_preview = optional(bool)<br/>    environment_variables = list(object({<br/>      name  = string<br/>      value = string<br/>    }))<br/>    framework                     = optional(string)<br/>    pull_request_environment_name = optional(string)<br/>    stage                         = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_auto_branch_creation_patterns"></a> [auto\_branch\_creation\_patterns](#input\_auto\_branch\_creation\_patterns) | Automated branch creation glob patterns for an Amplify app. | `list(string)` | `null` | no |
-| <a name="input_backend_environments"></a> [backend\_environments](#input\_backend\_environments) | Backend environments for an Amplify app. | <pre>list(object({<br>    name                 = string<br>    deployment_artifacts = optional(string)<br>    stack_name           = optional(string)<br>  }))</pre> | `[]` | no |
-| <a name="input_basic_auth_configs"></a> [basic\_auth\_configs](#input\_basic\_auth\_configs) | Basic authorization credentials for an Amplify app. A basic\_auth\_config block is documented below. | <pre>object({<br>    enable   = optional(bool, true)<br>    password = optional(string)<br>    username = optional(string)<br>  })</pre> | `null` | no |
-| <a name="input_branches"></a> [branches](#input\_branches) | Branches for an Amplify app. | <pre>list(object({<br>    name                          = string<br>    backend_environment_arn       = optional(string)<br>    description                   = optional(bool)<br>    display_name                  = optional(bool)<br>    enable_auto_build             = optional(bool)<br>    enable_basic_auth             = optional(bool)<br>    basic_auth_credentials        = optional(bool)<br>    enable_notification           = optional(bool)<br>    enable_performance_mode       = optional(bool)<br>    enable_pull_request_preview   = optional(bool)<br>    environment_variables         = optional(map(string))<br>    framework                     = optional(string)<br>    pull_request_environment_name = optional(string)<br>    stage                         = optional(string)<br>    tags                          = optional(map(string))<br>    ttl                           = optional(number)<br>  }))</pre> | `[]` | no |
+| <a name="input_backend_environments"></a> [backend\_environments](#input\_backend\_environments) | Backend environments for an Amplify app. | <pre>list(object({<br/>    name                 = string<br/>    deployment_artifacts = optional(string)<br/>    stack_name           = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_basic_auth_configs"></a> [basic\_auth\_configs](#input\_basic\_auth\_configs) | Basic authorization credentials for an Amplify app. A basic\_auth\_config block is documented below. | <pre>object({<br/>    enable   = optional(bool, true)<br/>    password = optional(string)<br/>    username = optional(string)<br/>  })</pre> | `null` | no |
+| <a name="input_branches"></a> [branches](#input\_branches) | Branches for an Amplify app. | <pre>list(object({<br/>    name                          = string<br/>    backend_environment_arn       = optional(string)<br/>    description                   = optional(bool)<br/>    display_name                  = optional(bool)<br/>    enable_auto_build             = optional(bool)<br/>    enable_basic_auth             = optional(bool)<br/>    basic_auth_credentials        = optional(bool)<br/>    enable_notification           = optional(bool)<br/>    enable_performance_mode       = optional(bool)<br/>    enable_pull_request_preview   = optional(bool)<br/>    environment_variables         = optional(map(string))<br/>    framework                     = optional(string)<br/>    pull_request_environment_name = optional(string)<br/>    stage                         = optional(string)<br/>    tags                          = optional(map(string))<br/>    ttl                           = optional(number)<br/>  }))</pre> | `[]` | no |
 | <a name="input_build_spec"></a> [build\_spec](#input\_build\_spec) | Build specification (build spec) for an Amplify app. The build spec is used to build and deploy a branch of an Amplify app. If not specified, the default build spec for the branch is used. The build spec must be formatted as a JSON string. For more information, see Build Spec Example. | `string` | `null` | no |
-| <a name="input_custom_rules"></a> [custom\_rules](#input\_custom\_rules) | Custom rewrite / redirect rules for an Amplify app. | <pre>list(object({<br>    source    = string<br>    target    = string<br>    status    = optional(string)<br>    condition = optional(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_custom_rules"></a> [custom\_rules](#input\_custom\_rules) | Custom rewrite / redirect rules for an Amplify app. | <pre>list(object({<br/>    source    = string<br/>    target    = string<br/>    status    = optional(string)<br/>    condition = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_description"></a> [description](#input\_description) | Description of the Amplify app. | `string` | `null` | no |
-| <a name="input_domains"></a> [domains](#input\_domains) | Domains for an Amplify app. | <pre>list(object({<br>    domain_name            = string<br>    enable_auto_sub_domain = optional(bool)<br>    wait_for_verification  = optional(bool)<br>    sub_domains = list(object({<br>      branch_name = string<br>      prefix      = string<br>    }))<br>  }))</pre> | `[]` | no |
+| <a name="input_domains"></a> [domains](#input\_domains) | Domains for an Amplify app. | <pre>list(object({<br/>    domain_name            = string<br/>    enable_auto_sub_domain = optional(bool)<br/>    wait_for_verification  = optional(bool)<br/>    sub_domains = list(object({<br/>      branch_name = string<br/>      prefix      = string<br/>    }))<br/>  }))</pre> | `[]` | no |
 | <a name="input_enable_auto_branch_creation"></a> [enable\_auto\_branch\_creation](#input\_enable\_auto\_branch\_creation) | Enable automated branch creation for an Amplify app. | `bool` | `null` | no |
 | <a name="input_enable_branch_auto_build"></a> [enable\_branch\_auto\_build](#input\_enable\_branch\_auto\_build) | Enable automated branch builds for an Amplify app. | `bool` | `null` | no |
 | <a name="input_enable_branch_auto_deletion"></a> [enable\_branch\_auto\_deletion](#input\_enable\_branch\_auto\_deletion) | Enable automated branch deletion for an Amplify app. | `bool` | `null` | no |
@@ -110,7 +111,7 @@ No modules.
 | <a name="input_platform"></a> [platform](#input\_platform) | Platform for an Amplify app. | `string` | `null` | no |
 | <a name="input_repository"></a> [repository](#input\_repository) | Repository for an Amplify app. | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Extra tags | `map(string)` | `{}` | no |
-| <a name="input_webhooks"></a> [webhooks](#input\_webhooks) | Webhooks for an Amplify app. | <pre>list(object({<br>    branch_name = string<br>    description = optional(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_webhooks"></a> [webhooks](#input\_webhooks) | Webhooks for an Amplify app. | <pre>list(object({<br/>    branch_name = string<br/>    description = optional(string)<br/>  }))</pre> | `[]` | no |
 
 ## Outputs
 

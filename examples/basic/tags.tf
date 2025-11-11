@@ -39,7 +39,7 @@ variable "owner" {
 
   validation {
     condition     = can(regex("[a-z\\-]+", var.owner))
-    error_message = "The product variable violates approved regex."
+    error_message = "The owner variable violates approved regex."
   }
 }
 

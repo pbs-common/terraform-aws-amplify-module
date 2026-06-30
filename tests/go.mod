@@ -3,7 +3,7 @@ module github.com/pbs/terraform-aws-amplify-module
 go 1.26.0
 
 require (
-	github.com/gruntwork-io/terratest v1.0.0
+	github.com/gruntwork-io/terratest v1.0.1
 	github.com/stretchr/testify v1.11.1
 )
 

@@ -4,6 +4,12 @@ on:
     branches: [ main ]
     paths:
       - '*.tf'
+      - '.terraform.lock.hcl'
+  # Dependabot PRs are merged with GITHUB_TOKEN, and pushes made with GITHUB_TOKEN
+  # do not trigger workflows. The schedule picks up those merges.
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
 concurrency: release-${{ github.base_ref }}
 jobs:
   release:
@@ -11,11 +17,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: "Check for unreleased changes"
+        id: changes
+        run: |
+          latest_tag="$(git tag --list | { grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' || true; } | sort -V | tail -n1)"
+          if ! [[ -n "$latest_tag" ]]; then
+            echo "::error::No release tag found."
+            exit 1
+          elif git diff --quiet "$latest_tag"..HEAD -- '*.tf' .terraform.lock.hcl; then
+            echo "No Terraform changes since $latest_tag."
+            echo "unreleased=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Terraform changes found since $latest_tag."
+            echo "unreleased=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Setup mise
+        if: steps.changes.outputs.unreleased == 'true'
         uses: jdx/mise-action@v4
 
       - name: "Run document script if necessary"
+        if: steps.changes.outputs.unreleased == 'true'
         run: |
           if [[ "$(basename "$(git rev-parse --show-toplevel)")" != *'terraform-aws-template'* ]]; then
             ./scripts/document.sh
@@ -36,6 +61,7 @@ jobs:
           GITHUB_USERNAME: ${{ github.actor }}
 
       - name: Release
+        if: steps.changes.outputs.unreleased == 'true'
         run: ./scripts/release.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
